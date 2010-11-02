@@ -40,6 +40,17 @@
     });
     gps_path.setMap(map);
 
+    var bounds = new google.maps.Circle({
+      center: new google.maps.LatLng(58.405393, 15.56875),
+      map: map,
+      radius: 1000,
+      fillColor: "#00FF00",
+      fillOpacity: 0.05,
+      strokeColor: "#FF0000",
+      strokeWeight: 1,
+      strokeOpcaity: 0.1
+    });
+
   });
 <?php
   $this->Html->scriptEnd();
