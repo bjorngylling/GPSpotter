@@ -9,7 +9,7 @@
       echo $scripts_for_layout;
     ?>
     
-    <title><?php echo $title_for_layout ?></title>
+    <title>GPSpotter - <?php echo $title_for_layout ?></title>
 
   </head>
   
@@ -25,12 +25,13 @@
         </ul>
       </div><!-- menu -->
       <div id="content">
+        <?php echo $this->Session->flash(); ?>
+
         <?php echo $content_for_layout ?>
       </div><!-- content -->
       <div id="footer">
           Made by Björn Gylling (bjogy661)
       </div>
-
     </div> <!-- wrapper -->
   </body>
 </html>

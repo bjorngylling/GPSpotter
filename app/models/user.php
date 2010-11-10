@@ -32,8 +32,8 @@ class User extends AppModel {
 	);
 
 	var $hasMany = array(
-		'Post' => array(
-			'className' => 'Post',
+		'GpsUnit' => array(
+			'className' => 'GpsUnit',
 			'foreignKey' => 'user_id',
 			'dependent' => false,
 			'conditions' => '',
@@ -65,6 +65,10 @@ class User extends AppModel {
 		else {
 			return array('Group' => array('id' => $groupId));
 		}
+	}
+
+	function bindNode($user) {
+		return array('Group' => array('id' => $user['User']['group_id']));
 	}
 
 }

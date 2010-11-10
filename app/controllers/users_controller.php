@@ -4,8 +4,7 @@ class UsersController extends AppController {
 	var $name = 'Users';
 
 	function beforeFilter() {
-    parent::beforeFilter(); 
-    $this->Auth->allow(array('*'));
+    parent::beforeFilter();
 	}
 
 
@@ -15,7 +14,7 @@ class UsersController extends AppController {
 	}
 
 	function view($id = null) {
-		if (!$id) {
+		if(!$id) {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
 		}
@@ -23,9 +22,9 @@ class UsersController extends AppController {
 	}
 
 	function add() {
-		if (!empty($this->data)) {
+		if(!empty($this->data)) {
 			$this->User->create();
-			if ($this->User->save($this->data)) {
+			if($this->User->save($this->data)) {
 				$this->Session->setFlash(__('The user has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -37,19 +36,23 @@ class UsersController extends AppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if(!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid user', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->User->save($this->data)) {
+		if(!empty($this->data)) {
+			die(var_dump($this->data));
+			if(!isset($this->data['User']['password'])) {
+				
+			}
+			if($this->User->save($this->data)) {
 				$this->Session->setFlash(__('The user has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The user could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
+		if(empty($this->data)) {
 			$this->data = $this->User->read(null, $id);
 		}
 		unset($this->data['User']['password']);
@@ -58,11 +61,11 @@ class UsersController extends AppController {
 	}
 
 	function delete($id = null) {
-		if (!$id) {
+		if(!$id) {
 			$this->Session->setFlash(__('Invalid id for user', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->User->delete($id)) {
+		if($this->User->delete($id)) {
 			$this->Session->setFlash(__('User deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}
@@ -71,11 +74,23 @@ class UsersController extends AppController {
 	}
 
 	function login() {
-		
+		if($this->Session->read('Auth.User')) {
+			$this->Session->setFlash('You are logged in!');
+			$this->redirect('/', null, false);
+		}
 	}
 
 	function logout() {
-		
+		$this->Session->setFlash('You have logged out.');
+		$this->redirect($this->Auth->logout());
+	}
+
+	/* development function for setting up ACL
+		 should be removed in production eviroment */
+	function initDb() {
+		$group =& $this->User->Group;
+		$group->id = 1;
+		$this->Acl->allow($group, 'controllers'); // Admins can do everything
 	}
 
 }

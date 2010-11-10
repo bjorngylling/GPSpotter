@@ -20,7 +20,5 @@
 ################################################################################
 LIB=${0/%cake/}
 APP=`pwd`
-
 exec /cygdrive/c/xampplite/php/php.exe -q ${LIB}cake.php -working "${APP}" "$@"
-
 exit;

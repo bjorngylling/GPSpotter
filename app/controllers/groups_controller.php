@@ -4,8 +4,7 @@ class GroupsController extends AppController {
 	var $name = 'Groups';
 
 	function beforeFilter() {
-    parent::beforeFilter(); 
-    $this->Auth->allow(array('*'));
+    parent::beforeFilter();
 	}
 
 	function index() {
@@ -14,7 +13,7 @@ class GroupsController extends AppController {
 	}
 
 	function view($id = null) {
-		if (!$id) {
+		if(!$id) {
 			$this->Session->setFlash(__('Invalid group', true));
 			$this->redirect(array('action' => 'index'));
 		}
@@ -22,9 +21,9 @@ class GroupsController extends AppController {
 	}
 
 	function add() {
-		if (!empty($this->data)) {
+		if(!empty($this->data)) {
 			$this->Group->create();
-			if ($this->Group->save($this->data)) {
+			if($this->Group->save($this->data)) {
 				$this->Session->setFlash(__('The group has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
@@ -34,29 +33,29 @@ class GroupsController extends AppController {
 	}
 
 	function edit($id = null) {
-		if (!$id && empty($this->data)) {
+		if(!$id && empty($this->data)) {
 			$this->Session->setFlash(__('Invalid group', true));
 			$this->redirect(array('action' => 'index'));
 		}
-		if (!empty($this->data)) {
-			if ($this->Group->save($this->data)) {
+		if(!empty($this->data)) {
+			if($this->Group->save($this->data)) {
 				$this->Session->setFlash(__('The group has been saved', true));
 				$this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The group could not be saved. Please, try again.', true));
 			}
 		}
-		if (empty($this->data)) {
+		if(empty($this->data)) {
 			$this->data = $this->Group->read(null, $id);
 		}
 	}
 
 	function delete($id = null) {
-		if (!$id) {
+		if(!$id) {
 			$this->Session->setFlash(__('Invalid id for group', true));
 			$this->redirect(array('action'=>'index'));
 		}
-		if ($this->Group->delete($id)) {
+		if($this->Group->delete($id)) {
 			$this->Session->setFlash(__('Group deleted', true));
 			$this->redirect(array('action'=>'index'));
 		}

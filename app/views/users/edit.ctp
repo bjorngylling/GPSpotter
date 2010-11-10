@@ -5,8 +5,9 @@
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('email');
-		echo $this->Form->input('password');
 		echo $this->Form->input('group_id');
+		echo $this->Form->input('password_1', array('label' => __('Password', true)));
+		echo $this->Form->input('password_2', array('label' => __('Confirm password', true)));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>

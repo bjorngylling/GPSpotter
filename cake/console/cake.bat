@@ -26,7 +26,7 @@
 SET app=%0
 SET lib=%~dp0
 
-C:\xampplite\php\php.exe -q "%lib%cake.php" -working "%CD%" %*
+C:\xampplite\php\php.exe -q "%lib%cake.php" -working "C:/xampplite/htdocs/gpspotter/app" %*
 
 echo.
 
