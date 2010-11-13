@@ -15,12 +15,12 @@
   
   <body>
     <div id="wrapper">
-    	<div id="header">
-      	<h1>GPSpotter</h1>
+      <div id="header">
+        <h1>GPSpotter</h1>
       </div>
       <div id="menu">
         <ul>
-          <li><a href="#">Menu item 1</a> &bull; </li>
+          <li><?php echo $this->Html->link(__('List Gps Units', true), array('controller' => 'gps_units', 'action' => 'index'));?> &bull; </li>
           <li><a href="#">Menu item 2</a></li>
         </ul>
       </div><!-- menu -->
@@ -33,5 +33,24 @@
           Made by Björn Gylling (bjogy661)
       </div>
     </div> <!-- wrapper -->
+    <?php if (Configure::read('debug') == 2) { ?>
+
+    <style type="text/css">
+        .cake-sql-log { display: none; }
+    </style>
+    <script language="javascript">
+        <!--
+        $(document).ready(function() {
+            $("#sql_toggle").click(function() {
+                $('.cake-sql-log').toggle();
+
+            });
+        });    
+        -->
+    </script>
+    <a href="#" id="sql_toggle">[Expand/Collapse SQL]</a>
+
+    <?php } 
+    echo $this->element('sql_dump'); ?>
   </body>
 </html>
