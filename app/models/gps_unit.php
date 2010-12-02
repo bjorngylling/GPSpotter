@@ -47,6 +47,19 @@ class GpsUnit extends AppModel {
       'exclusive' => '',
       'finderQuery' => '',
       'counterQuery' => ''
+    ),
+    'GpsBound' => array(
+      'className' => 'GpsBound',
+      'foreignKey' => 'gps_unit_id',
+      'dependent' => false,
+      'conditions' => '',
+      'fields' => '',
+      'order' => '',
+      'limit' => '',
+      'offset' => '',
+      'exclusive' => '',
+      'finderQuery' => '',
+      'counterQuery' => ''
     )
   );
 

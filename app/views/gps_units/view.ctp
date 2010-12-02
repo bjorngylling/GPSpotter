@@ -26,59 +26,83 @@
       loadPositions();
     });
     
-    loadPositions();
+    drawMap();
   });
 
-  function loadPositions() {
+  function drawMap() {
     if($('#auto_update').is(':checked')) {
-      $.getJSON('<?php echo $this->Html->url(array(
-          'controller' => 'gps_positions', 
-          'action' => 'index', $gpsUnit['GpsUnit']['id'], 
-          'ext' => '.json'));?>', 
-        { last_update: lastUpdate },
-        function(data) {
-          clearMap();
+      clearMap();
 
-          var coordinates = new Array();
-
-          $.each(data, function(i, position) {     
-            var latlng = new google.maps.LatLng(position.GpsPosition.latitude, position.GpsPosition.longitude);
-
-            markers.push(
-              new google.maps.Marker({
-                position: latlng,
-                map: map,
-                title: "Added at: " + position.GpsPosition.created
-              })
-            );
-
-            coordinates.push(latlng)
-          });
-          
-          path = new google.maps.Polyline({
-            path: coordinates,
-            strokeColor: "#00AA00",
-            strokeOpacity: 1.0,
-            strokeWeight: 2
-          });
-          path.setMap(map);
-
-          bounds.push(
-            new google.maps.Circle({
-              center: new google.maps.LatLng(58.405393, 15.56875),
-              map: map,
-              radius: 1000,
-              fillColor: "#00FF00",
-              fillOpacity: 0.05,
-              strokeColor: "#FF0000",
-              strokeWeight: 1,
-              strokeOpcaity: 0.1
-            })
-          );
-        });
-      lastUpdate = +new Date();
-      setTimeout(loadPositions, 10000);
+      loadPositions(lastUpdate);
+      loadBounds(lastUpdate);
     }
+    lastUpdate = +new Date();
+    setTimeout(drawMap, 10000);
+  }
+
+  function loadPositions(lastUpdate) {
+    $.getJSON('<?php echo $this->Html->url(array(
+        'controller' => 'gps_positions', 
+        'action' => 'index', $gpsUnit['GpsUnit']['id'], 
+        'ext' => '.json'));?>', 
+      { last_update: lastUpdate },
+      drawPositions);
+  }
+
+  function drawPositions(data) {
+
+    var coordinates = new Array();
+
+    $.each(data, function(i, position) {     
+      var latlng = new google.maps.LatLng(position.GpsPosition.latitude, position.GpsPosition.longitude);
+
+      markers.push(
+        new google.maps.Marker({
+          position: latlng,
+          map: map,
+          title: "Added at: " + position.GpsPosition.created
+        })
+      );
+
+      coordinates.push(latlng)
+    });
+    
+    path = new google.maps.Polyline({
+      path: coordinates,
+      strokeColor: "#00AA00",
+      strokeOpacity: 1.0,
+      strokeWeight: 2
+    });
+    path.setMap(map);
+  }
+
+  function loadBounds(lastUpdate) {
+    $.getJSON('<?php echo $this->Html->url(array(
+        'controller' => 'gps_bounds', 
+        'action' => 'index', $gpsUnit['GpsUnit']['id'], 
+        'ext' => '.json'));?>', 
+      { last_update: lastUpdate },
+      drawBounds);
+  }
+
+  function drawBounds(data) {
+    $.each(data, function(i, position) {     
+      var latlng = new google.maps.LatLng(position.GpsPosition.latitude, position.GpsPosition.longitude);
+      var radius = position.GpsPosition.radius;
+
+      bounds.push(
+        new google.maps.Circle({
+          center: latlng,
+          map: map,
+          radius: radius,
+          fillColor: "#00FF00",
+          fillOpacity: 0.05,
+          strokeColor: "#FF0000",
+          strokeWeight: 1,
+          strokeOpcaity: 0.1
+        })
+      );
+    });
   }
 
   function clearMap() {
@@ -145,6 +169,8 @@
       <li><?php echo $this->Html->link(__('New User', true), array('controller' => 'users', 'action' => 'add')); ?> </li>
       <li><?php echo $this->Html->link(__('List Gps Positions', true), array('controller' => 'gps_positions', 'action' => 'index', $gpsUnit['GpsUnit']['id'])); ?> </li>
       <li><?php echo $this->Html->link(__('New Gps Position', true), array('controller' => 'gps_positions', 'action' => 'add')); ?> </li>
+      <li><?php echo $this->Html->link(__('List Gps Bounds', true), array('controller' => 'gps_bounds', 'action' => 'index', $gpsUnit['GpsUnit']['id'])); ?> </li>
+      <li><?php echo $this->Html->link(__('New Gps Bounds', true), array('controller' => 'gps_bounds', 'action' => 'add')); ?> </li>
     </ul>
   </div>
 </div>

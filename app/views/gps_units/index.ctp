@@ -53,7 +53,5 @@
     <li><?php echo $this->Html->link(__('New Gps Unit', true), array('action' => 'add')); ?></li>
     <li><?php echo $this->Html->link(__('List Users', true), array('controller' => 'users', 'action' => 'index')); ?> </li>
     <li><?php echo $this->Html->link(__('New User', true), array('controller' => 'users', 'action' => 'add')); ?> </li>
-    <li><?php echo $this->Html->link(__('List Gps Positions', true), array('controller' => 'gps_positions', 'action' => 'index')); ?> </li>
-    <li><?php echo $this->Html->link(__('New Gps Position', true), array('controller' => 'gps_positions', 'action' => 'add')); ?> </li>
   </ul>
 </div>

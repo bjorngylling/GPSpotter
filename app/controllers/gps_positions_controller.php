@@ -5,8 +5,6 @@ class GpsPositionsController extends AppController {
 
   var $components = array('RequestHandler');
 
-  var $paginate = array('GpsPosition' => array('limit' => 10));
-
   function index($gps_unit_id = null) {
     if (!$gps_unit_id) {
       $this->Session->setFlash(__(
@@ -47,7 +45,7 @@ class GpsPositionsController extends AppController {
     $this->set('gpsPosition', $this->GpsPosition->read(null, $id));
   }
 
-  function add() {
+  function add($gps_unit_id = null) {
     if (!empty($this->data)) {
       $this->GpsPosition->create();
       if ($this->GpsPosition->save($this->data)) {
